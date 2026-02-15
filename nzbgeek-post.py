@@ -260,8 +260,12 @@ def select_category() -> Optional[str]:
     
     while True:
         print()
-        print_colored("Enter category number (0-9): ", Fore.CYAN, end="")
+        print_colored("Enter category number (0-9 or ENTER for default): ", Fore.CYAN, end="")
         choice = input().strip()
+        
+        if choice == "":
+            # ENTER pressed - use default category
+            return DEFAULT_CATEGORY
         
         if choice == "0":
             return None  # Signal to exit
