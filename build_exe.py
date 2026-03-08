@@ -38,6 +38,15 @@ def build_executable():
     print()
     print("Generating executable...")
     print()
+
+    # For Windows executables, .ico is the preferred icon format.
+    icon_file = Path("nzb_geek_icon.ico")
+    icon_arg = f"--icon={icon_file}" if icon_file.exists() else "--icon=NONE"
+    if icon_file.exists():
+        print(f"[OK] Icon detected: {icon_file}")
+    else:
+        print("[WARNING] .ico icon not found, build will continue without a custom icon")
+    print()
     
     # PyInstaller command
     cmd = [
@@ -45,7 +54,7 @@ def build_executable():
         "--onefile",                    # Single file
         "--console",                    # Console mode (not GUI)
         "--name=nzbgeek-post",          # Executable name
-        "--icon=NONE",                  # No custom icon
+        icon_arg,                       # Executable icon
         "--clean",                      # Clean cache before build
         "--noconfirm",                  # Don't ask for confirmation
         "nzbgeek-post.py"
